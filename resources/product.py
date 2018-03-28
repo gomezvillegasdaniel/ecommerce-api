@@ -4,6 +4,13 @@ from models.product import ProductModel
 
 class Product(Resource):
 
+    def delete(self, id):
+        product = ProductModel.find_by_id(id)
+        if not product:
+            return {'message': 'Product not found'}, 404
+        product.delete_from_db()
+        return {'message': 'Product deleted'}
+
     def patch(self, id):
         product = ProductModel.find_by_id(id)
         if not product:
