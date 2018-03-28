@@ -4,6 +4,10 @@ from models.product import ProductModel
 
 class Product(Resource):
 
+    def get(self, id):
+        product = ProductModel.find_by_id(id)
+        return product.toDict() if product else {'message': 'Product not found'}, 404
+
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str, required=True,

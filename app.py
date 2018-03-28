@@ -16,7 +16,7 @@ api = Api(app)
 def create_tables():
     db.create_all()
 
-api.add_resource(Product, '/product')
+api.add_resource(Product, '/product', '/product/<int:id>')
 
 if __name__ == '__main__':
     from db import db
