@@ -4,6 +4,38 @@ from models.product import ProductModel
 
 class Product(Resource):
 
+    def patch(self, id):
+        product = ProductModel.find_by_id(id)
+        if not product:
+            return {'message': 'Product not found'}, 404
+        
+        parser = reqparse.RequestParser()
+        parser.add_argument('name', type=str)
+        parser.add_argument('npc', type=str)
+        parser.add_argument('stock', type=int)
+        parser.add_argument('price', type=float)
+        data = parser.parse_args()
+
+        name = data.get('name')
+        npc = data.get('npc')
+        stock = data.get('stock')
+        price = data.get('price')
+
+        if name:
+            product.name = name
+        if npc:
+            product.npc = npc
+        if stock:
+            product.stock = stock
+        if price:
+            product.price = price
+        try:
+            product.save_to_db()
+        except:
+            return {"message": "An error occurred updating the product."}, 500
+        
+        return product.toDict()
+
     def get(self, id):
         product = ProductModel.find_by_id(id)
         return product.toDict() if product else {'message': 'Product not found'}, 404
