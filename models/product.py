@@ -17,6 +17,10 @@ class ProductModel(db.Model):
         self.npc = npc
         self.stock = stock
         self.price = price
+    
+    @classmethod
+    def find_by_name(cls, name):
+        return cls.query.filter_by(name=name).first()
 
     def toDict(self):
         return {
