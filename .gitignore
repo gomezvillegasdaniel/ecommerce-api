@@ -1,3 +1,4 @@
 .vscode/
+.idea/
 ecommerce_api_env/
 __pycache__/
