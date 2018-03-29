@@ -22,4 +22,5 @@ api.add_resource(ProductList, '/products')
 if __name__ == '__main__':
     from db import db
     db.init_app(app)
-    app.run(port=5000)
+    app.run(port=5000,\
+        debug=False if os.environ.get('ENV') == 'PROD' else True)
