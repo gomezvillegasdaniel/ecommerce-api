@@ -3,7 +3,7 @@ import os
 from flask import Flask
 from flask_restful import Api
 
-from resources.product import Product
+from resources.product import Product, ProductList
 
 
 app = Flask(__name__)
@@ -17,6 +17,7 @@ def create_tables():
     db.create_all()
 
 api.add_resource(Product, '/product', '/product/<int:id>')
+api.add_resource(ProductList, '/products')
 
 if __name__ == '__main__':
     from db import db
