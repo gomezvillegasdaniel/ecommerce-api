@@ -1,5 +1,23 @@
 from flask_restful import Resource, reqparse
+
 from models.product import ProductModel
+
+from helpers import clean_dict_by_none_values
+
+
+class ProductList(Resource):
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('orderBy', type=str)
+
+    def get(self):
+        query_params = \
+            clean_dict_by_none_values(ProductList.parser.parse_args())
+        orderBy = \
+            (field for field in ('name', query_params.get('orderBy'))\
+             if field != None)
+        return {'products': list(map(lambda p: p.toDict(),\
+            ProductModel.query.order_by(*orderBy)))}
 
 
 class Product(Resource):
