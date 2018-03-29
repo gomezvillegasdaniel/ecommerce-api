@@ -1,20 +1,26 @@
 ## How to setup:
 
-- sudo apt-get install python3-pip
-- sudo pip3 install virtualenvwrapper
+- install these packages
+```
+sudo apt-get install python3 python3-pip python3-virtualenv
+sudo pip3 install virtualenvwrapper
+```
 
-- Add theses lines to ~/.bashrc:
+- Add these environment variables to ~/.bashrc substituting your own db config
 ```
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Devel
 export VIRTUALENVWRAPPER_VIRTUALENV=$(which virtualenv)
 source /usr/local/bin/virtualenvwrapper.sh
+export DATABASE_URL="postgres://username:password@host:port/dbname"
+export FLASK_SECRET_KEY="secretkey"
+```
+- apply them
+```
+source ~/.bashrc
 ```
 
-- source ~/.bashrc:
-
-
+- execute
 ```
 mkvirtualenv -p python3 ecommerce_api_venv
 workon ecommerce_api_venv
@@ -27,10 +33,11 @@ sudo /etc/init.d/postgresql restart
 createdb dbname
 ```
 
-- Add theses lines to ~/.bashrc:
+- add this line to ~/.bashrc for production purposes only
 ```
-export DATABASE_URL="postgres://username:password@host:port/dbname"
-export FLASK_SECRET_KEY="secretkey"
+export ENV="PROD"
 ```
-
-- source ~/.bashrc
+- apply
+```
+source ~/.bashrc
+```
