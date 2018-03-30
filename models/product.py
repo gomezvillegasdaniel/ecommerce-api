@@ -31,7 +31,7 @@ class ProductModel(db.Model):
     def all(cls, *order_by):
         return cls.query.order_by(*order_by).all()
 
-    def toDict(self):
+    def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,

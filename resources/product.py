@@ -24,9 +24,9 @@ class ProductList(Resource):
         print('order_by', order_by)
         name = kwargs.get('searchByName')
         if name:
-            products = list(map(lambda p: p.toDict(), ProductModel.find_by_name(name, *order_by)))
+            products = list(map(lambda p: p.to_dict(), ProductModel.find_by_name(name, *order_by)))
         else:
-            products = list(map(lambda p: p.toDict(), ProductModel.all(*order_by)))
+            products = list(map(lambda p: p.to_dict(), ProductModel.all(*order_by)))
 
         return {'products': products}
 
@@ -70,11 +70,11 @@ class Product(Resource):
         except:
             return {"message": "An error occurred updating the product."}, 500
         
-        return product.toDict()
+        return product.to_dict()
 
     def get(self, id):
         product = ProductModel.find_by_id(id)
-        return product.toDict() if product else {'message': 'Product not found'}, 404
+        return product.to_dict() if product else {'message': 'Product not found'}, 404
 
     def post(self):
         parser = reqparse.RequestParser()
@@ -98,4 +98,4 @@ class Product(Resource):
         except:
             return {"message": "An error occurred inserting the product."}, 500
 
-        return product.toDict(), 201
+        return product.to_dict(), 201
