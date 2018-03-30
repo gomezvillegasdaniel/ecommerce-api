@@ -2,6 +2,8 @@ from flask_restful import Resource, reqparse
 
 from sqlalchemy import desc
 
+from math import ceil
+
 from models.product import ProductModel
 
 
@@ -27,10 +29,17 @@ class ProductList(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('orderBy', type=str)
     parser.add_argument('searchByName', type=str)
+    parser.add_argument('page', type=int, required=True,
+                        help="page field cannot be left blank!")
+    parser.add_argument('per_page', type=int, required=True,
+                        help="per_page field cannot be left blank!")
 
     def get(self):
         kwargs = ProductList.parser.parse_args()
         sorting = kwargs.get('orderBy')
+        by_name = kwargs.get('searchByName')
+        page = kwargs.get('page')
+        per_page = kwargs.get('per_page')
         order_by = []
 
         if sorting:
@@ -46,13 +55,34 @@ class ProductList(Resource):
         else:
             order_by.append('name')
 
-        name = kwargs.get('searchByName')
-        if name:
-            products = list(map(lambda p: p.to_dict(), ProductModel.find_by_name(name, *order_by)))
-        else:
-            products = list(map(lambda p: p.to_dict(), ProductModel.all(*order_by)))
+        pagination = {'page': page, 'per_page': per_page}
 
-        return {'products': products}, 200
+        if by_name:
+            products = ProductModel.find_by_name(by_name, *order_by, **pagination)
+        else:
+            products = ProductModel.all_items(*order_by, **pagination)
+
+        total_pages = ceil(products.total / per_page)
+        link = '/products?page={}&per_page={}'
+        prev_page = page - 1 if page > 1 else 1
+        next_page = page + 1 if page < total_pages else total_pages
+
+        return {
+            'metadata': {
+                'page': page,
+                'per_page': per_page,
+                'total_pages': total_pages,
+                'total_products': products.total,
+                'links': {
+                    'self': link.format(page, per_page),
+                    'first': link.format(1, per_page),
+                    'prev': link.format(prev_page, per_page),
+                    'next': link.format(next_page, per_page),
+                    'last': link.format(total_pages, per_page)
+                }
+            },
+            'products': tuple(map(ProductModel.to_dict, products.items))
+        }, 200
 
 
 class Product(Resource):
