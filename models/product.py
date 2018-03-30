@@ -24,12 +24,12 @@ class ProductModel(db.Model):
         return cls.query.filter_by(id=id).first()
 
     @classmethod
-    def find_by_name(cls, name, *order_by):
-        return cls.query.filter_by(name=name).order_by(*order_by).all()
+    def find_by_name(cls, name, *order_by, **pagination):
+        return cls.query.filter_by(name=name).order_by(*order_by).paginate(**pagination)
 
     @classmethod
-    def all(cls, *order_by):
-        return cls.query.order_by(*order_by).all()
+    def all_items(cls, *order_by, **pagination):
+        return cls.query.order_by(*order_by).paginate(**pagination)
 
     def to_dict(self):
         return {
