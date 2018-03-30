@@ -3,6 +3,22 @@ from flask_restful import Resource, reqparse
 from models.product import ProductModel
 
 
+class ProductLike(Resource):
+
+    def patch(self, id):
+        product = ProductModel.find_by_id(id)
+        if not product:
+            return {'message': 'Product not found'}, 404
+
+        product.likes += 1
+
+        try:
+            product.save_to_db()
+        except:
+            return {"message": "An error occurred giving a like to the product."}, 500
+
+        return product.to_dict(), 200
+
 class ProductList(Resource):
 
     parser = reqparse.RequestParser()
