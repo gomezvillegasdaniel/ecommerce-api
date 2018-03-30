@@ -1,6 +1,7 @@
 from db import db
 import datetime
 
+
 class ProductModel(db.Model):
     __tablename__ = 'products'
 
@@ -23,8 +24,12 @@ class ProductModel(db.Model):
         return cls.query.filter_by(id=id).first()
 
     @classmethod
-    def find_by_name(cls, name):
-        return cls.query.filter_by(name=name).first()
+    def find_by_name(cls, name, *order_by):
+        return cls.query.filter_by(name=name).order_by(*order_by).all()
+
+    @classmethod
+    def all(cls, *order_by):
+        return cls.query.order_by(*order_by).all()
 
     def toDict(self):
         return {
