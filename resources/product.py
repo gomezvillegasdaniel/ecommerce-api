@@ -19,6 +19,7 @@ class ProductLike(Resource):
 
         return product.to_dict(), 200
 
+
 class ProductList(Resource):
 
     parser = reqparse.RequestParser()
@@ -37,14 +38,13 @@ class ProductList(Resource):
             else:
                 order_by.append(ordering)
 
-        print('order_by', order_by)
         name = kwargs.get('searchByName')
         if name:
             products = list(map(lambda p: p.to_dict(), ProductModel.find_by_name(name, *order_by)))
         else:
             products = list(map(lambda p: p.to_dict(), ProductModel.all(*order_by)))
 
-        return {'products': products}
+        return {'products': products}, 200
 
 
 class Product(Resource):
@@ -54,7 +54,7 @@ class Product(Resource):
         if not product:
             return {'message': 'Product not found'}, 404
         product.delete_from_db()
-        return {'message': 'Product deleted'}
+        return {'message': 'Product deleted'}, 200
 
     def patch(self, id):
         product = ProductModel.find_by_id(id)
@@ -81,12 +81,13 @@ class Product(Resource):
             product.stock = stock
         if price:
             product.price = price
+            
         try:
             product.save_to_db()
         except:
             return {"message": "An error occurred updating the product."}, 500
         
-        return product.to_dict()
+        return product.to_dict(), 200
 
     def get(self, id):
         product = ProductModel.find_by_id(id)
