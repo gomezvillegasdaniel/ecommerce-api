@@ -2,22 +2,33 @@ from flask_restful import Resource, reqparse
 
 from models.product import ProductModel
 
-from helpers import clean_dict_by_none_values
-
 
 class ProductList(Resource):
 
     parser = reqparse.RequestParser()
     parser.add_argument('orderBy', type=str)
+    parser.add_argument('searchByName', type=str)
 
     def get(self):
-        query_params = \
-            clean_dict_by_none_values(ProductList.parser.parse_args())
-        orderBy = \
-            (field for field in ('name', query_params.get('orderBy'))\
-             if field != None)
-        return {'products': list(map(lambda p: p.toDict(),\
-            ProductModel.query.order_by(*orderBy)))}
+        kwargs = ProductList.parser.parse_args()
+        order_by = ['name']
+        ordering = kwargs.get('orderBy')
+
+        if ordering:
+            if isinstance(ordering, list):
+                for field in ordering:
+                    order_by.append(field)
+            else:
+                order_by.append(ordering)
+
+        print('order_by', order_by)
+        name = kwargs.get('searchByName')
+        if name:
+            products = list(map(lambda p: p.toDict(), ProductModel.find_by_name(name, *order_by)))
+        else:
+            products = list(map(lambda p: p.toDict(), ProductModel.all(*order_by)))
+
+        return {'products': products}
 
 
 class Product(Resource):
