@@ -28,15 +28,21 @@ class ProductList(Resource):
 
     def get(self):
         kwargs = ProductList.parser.parse_args()
-        order_by = ['name']
         ordering = kwargs.get('orderBy')
+        order_by = []
 
         if ordering:
             if isinstance(ordering, list):
                 for field in ordering:
+                    if field == 'likes':
+                        field += ' desc'
                     order_by.append(field)
             else:
+                if ordering == 'likes':
+                    ordering += ' desc'
                 order_by.append(ordering)
+        else:
+            order_by.append('name')
 
         name = kwargs.get('searchByName')
         if name:
@@ -81,7 +87,7 @@ class Product(Resource):
             product.stock = stock
         if price:
             product.price = price
-            
+
         try:
             product.save_to_db()
         except:
