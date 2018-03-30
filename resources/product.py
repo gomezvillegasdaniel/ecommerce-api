@@ -1,5 +1,7 @@
 from flask_restful import Resource, reqparse
 
+from sqlalchemy import desc
+
 from models.product import ProductModel
 
 
@@ -28,19 +30,19 @@ class ProductList(Resource):
 
     def get(self):
         kwargs = ProductList.parser.parse_args()
-        ordering = kwargs.get('orderBy')
+        sorting = kwargs.get('orderBy')
         order_by = []
 
-        if ordering:
-            if isinstance(ordering, list):
-                for field in ordering:
+        if sorting:
+            if isinstance(sorting, list):
+                for field in sorting:
                     if field == 'likes':
-                        field += ' desc'
+                        field = desc(field)
                     order_by.append(field)
             else:
-                if ordering == 'likes':
-                    ordering += ' desc'
-                order_by.append(ordering)
+                if sorting == 'likes':
+                    sorting = desc(sorting)
+                order_by.append(sorting)
         else:
             order_by.append('name')
 
