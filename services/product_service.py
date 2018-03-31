@@ -50,6 +50,25 @@ class ProductService:
         }
 
     @staticmethod
+    def buy_product(id, quantity):
+        product = ProductModel.find_by_id(id)
+
+        if not product:
+            return {'not_found': 'Product not found'}
+
+        if product.stock < quantity:
+            return {'stock_not_enough': {'current_stock': product.stock}}
+
+        product.stock -= quantity
+
+        try:
+            product.save_to_db()
+        except:
+            return {'error': 'An error occurred buying a product.'}
+
+        return {'successful_buy': {'current_stock': product.stock}}
+
+    @staticmethod
     def give_like_product(id):
         product = ProductModel.find_by_id(id)
         if not product:

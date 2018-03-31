@@ -1,6 +1,25 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, inputs
 
 from services.product_service import ProductService
+
+
+class ProductBuy(Resource):
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('quantity', type=inputs.positive, required=True)
+
+    def patch(self, id):
+        kwargs = ProductBuy.parser.parse_args()
+        data = ProductService.buy_product(id, kwargs.get('quantity'))
+
+        if data.get('not_found'):
+            return data, 404
+        elif data.get('stock_not_enough'):
+            return data, 200
+        elif data.get('error'):
+            return data, 500
+
+        return data, 200
 
 
 class ProductLike(Resource):
