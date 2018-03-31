@@ -4,7 +4,7 @@ from flask import Flask
 from flask_restful import Api
 
 from resources.product_resource import Product, ProductList, ProductLike, ProductBuy
-
+from resources.user_resource import UserRegister
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
@@ -22,6 +22,7 @@ api.add_resource(Product, '/api/product', '/api/product/<int:_id>')
 api.add_resource(ProductList, '/api/products')
 api.add_resource(ProductLike, '/api/product/<int:_id>/like')
 api.add_resource(ProductBuy, '/api/product/<int:_id>/buy')
+api.add_resource(UserRegister, '/api/user/register')
 
 if __name__ == '__main__':
     from db import db
