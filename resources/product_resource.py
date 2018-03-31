@@ -41,9 +41,9 @@ class ProductList(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('orderBy', type=str, action='append')
     parser.add_argument('searchByName', type=str)
-    parser.add_argument('page', type=int, required=True,
+    parser.add_argument('page', type=inputs.positive, required=True,
                         help="page field cannot be left blank!")
-    parser.add_argument('per_page', type=int, required=True,
+    parser.add_argument('per_page', type=inputs.positive, required=True,
                         help="per_page field cannot be left blank!")
 
     def get(self):
@@ -73,7 +73,7 @@ class Product(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str)
         parser.add_argument('npc', type=str)
-        parser.add_argument('stock', type=int)
+        parser.add_argument('stock', type=inputs.positive)
         parser.add_argument('price', type=float)
         data = parser.parse_args()
 
@@ -99,7 +99,7 @@ class Product(Resource):
             help="name field cannot be left blank!")
         parser.add_argument('npc', type=str, required=True,
             help="npc field cannot be left blank!")
-        parser.add_argument('stock', type=int, required=True,
+        parser.add_argument('stock', type=inputs.positive, required=True,
             help="stock field cannot be left blank!")
         parser.add_argument('price', type=float, required=True,
             help="price field cannot be left blank!")
