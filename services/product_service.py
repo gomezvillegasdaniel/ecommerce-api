@@ -72,7 +72,7 @@ class ProductService:
     def give_like_product(id):
         product = ProductModel.find_by_id(id)
         if not product:
-            return {'notfound': 'Product not found'}
+            return {'not_found': 'Product not found'}
 
         product.likes += 1
 
@@ -105,7 +105,7 @@ class ProductService:
     def delete_product(id):
         product = ProductModel.find_by_id(id)
         if not product:
-            return {'notfound': 'Product not found'}
+            return {'not_found': 'Product not found'}
 
         product.delete_from_db()
         return {'ok': 'Product deleted'}
@@ -114,7 +114,7 @@ class ProductService:
     def update_product(id, *args, **data):
         product = ProductModel.find_by_id(id)
         if not product:
-            return {'notfound': 'Product not found'}
+            return {'not_found': 'Product not found'}
 
         name = data.get('name')
         npc = data.get('npc')
@@ -141,6 +141,6 @@ class ProductService:
     def get_product(id):
         product = ProductModel.find_by_id(id)
         if not product:
-            return {'notfound': 'Product not found'}
+            return {'not_found': 'Product not found'}
 
         return product.to_dict()
