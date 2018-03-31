@@ -28,7 +28,7 @@ class ProductLike(Resource):
 
         data = ProductService.give_like_product(id)
 
-        if data.get('notfound'):
+        if data.get('not_found'):
             return data, 404
         elif data.get('error'):
             return data, 500
@@ -63,7 +63,7 @@ class Product(Resource):
     def delete(self, id):
         data = ProductService.delete_product(id)
 
-        if data.get('notfound'):
+        if data.get('not_found'):
             return data, 404
 
         return data, 200
@@ -79,7 +79,7 @@ class Product(Resource):
 
         data = ProductService.update_product(id, **data)
 
-        if data.get('notfound'):
+        if data.get('not_found'):
             return data, 404
         elif data.get('error'):
             return data, 500
@@ -88,7 +88,7 @@ class Product(Resource):
 
     def get(self, id):
         data = ProductService.get_product(id)
-        if data.get('notfound'):
+        if data.get('not_found'):
             return data, 404
 
         return data, 200
