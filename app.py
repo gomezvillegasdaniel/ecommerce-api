@@ -3,7 +3,7 @@ import os
 from flask import Flask
 from flask_restful import Api
 
-from resources.product import Product, ProductList, ProductLike
+from resources.product_resource import Product, ProductList, ProductLike
 
 
 app = Flask(__name__)
