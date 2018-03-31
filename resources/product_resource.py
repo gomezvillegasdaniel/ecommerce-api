@@ -8,9 +8,9 @@ class ProductBuy(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('quantity', type=inputs.positive, required=True)
 
-    def patch(self, id):
+    def patch(self, _id):
         kwargs = ProductBuy.parser.parse_args()
-        data = ProductService.buy_product(id, kwargs.get('quantity'))
+        data = ProductService.buy_product(_id, kwargs.get('quantity'))
 
         if data.get('not_found'):
             return data, 404
@@ -24,9 +24,9 @@ class ProductBuy(Resource):
 
 class ProductLike(Resource):
 
-    def patch(self, id):
+    def patch(self, _id):
 
-        data = ProductService.give_like_product(id)
+        data = ProductService.give_like_product(_id)
 
         if data.get('not_found'):
             return data, 404
@@ -60,15 +60,15 @@ class ProductList(Resource):
 
 class Product(Resource):
 
-    def delete(self, id):
-        data = ProductService.delete_product(id)
+    def delete(self, _id):
+        data = ProductService.delete_product(_id)
 
         if data.get('not_found'):
             return data, 404
 
         return data, 200
 
-    def patch(self, id):
+    def patch(self, _id):
 
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str)
@@ -77,7 +77,7 @@ class Product(Resource):
         parser.add_argument('price', type=float)
         data = parser.parse_args()
 
-        data = ProductService.update_product(id, **data)
+        data = ProductService.update_product(_id, **data)
 
         if data.get('not_found'):
             return data, 404
@@ -86,8 +86,8 @@ class Product(Resource):
 
         return data, 200
 
-    def get(self, id):
-        data = ProductService.get_product(id)
+    def get(self, _id):
+        data = ProductService.get_product(_id)
         if data.get('not_found'):
             return data, 404
 

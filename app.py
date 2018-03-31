@@ -18,10 +18,10 @@ def create_tables():
     db.create_all()
 
 
-api.add_resource(Product, '/api/product', '/api/product/<int:id>')
+api.add_resource(Product, '/api/product', '/api/product/<int:_id>')
 api.add_resource(ProductList, '/api/products')
-api.add_resource(ProductLike, '/api/product/<int:id>/like')
-api.add_resource(ProductBuy, '/api/product/<int:id>/buy')
+api.add_resource(ProductLike, '/api/product/<int:_id>/like')
+api.add_resource(ProductBuy, '/api/product/<int:_id>/buy')
 
 if __name__ == '__main__':
     from db import db

@@ -50,8 +50,8 @@ class ProductService:
         }
 
     @staticmethod
-    def buy_product(id, quantity):
-        product = ProductModel.find_by_id(id)
+    def buy_product(_id, quantity):
+        product = ProductModel.find_by_id(_id)
 
         if not product:
             return {'not_found': 'Product not found'}
@@ -69,8 +69,8 @@ class ProductService:
         return {'successful_buy': {'current_stock': product.stock}}
 
     @staticmethod
-    def give_like_product(id):
-        product = ProductModel.find_by_id(id)
+    def give_like_product(_id):
+        product = ProductModel.find_by_id(_id)
         if not product:
             return {'not_found': 'Product not found'}
 
@@ -102,8 +102,8 @@ class ProductService:
         return product.to_dict()
 
     @staticmethod
-    def delete_product(id):
-        product = ProductModel.find_by_id(id)
+    def delete_product(_id):
+        product = ProductModel.find_by_id(_id)
         if not product:
             return {'not_found': 'Product not found'}
 
@@ -111,8 +111,8 @@ class ProductService:
         return {'ok': 'Product deleted'}
 
     @staticmethod
-    def update_product(id, *args, **data):
-        product = ProductModel.find_by_id(id)
+    def update_product(_id, *args, **data):
+        product = ProductModel.find_by_id(_id)
         if not product:
             return {'not_found': 'Product not found'}
 
@@ -138,8 +138,8 @@ class ProductService:
         return product.to_dict()
 
     @staticmethod
-    def get_product(id):
-        product = ProductModel.find_by_id(id)
+    def get_product(_id):
+        product = ProductModel.find_by_id(_id)
         if not product:
             return {'not_found': 'Product not found'}
 

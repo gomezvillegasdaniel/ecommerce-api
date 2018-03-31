@@ -20,8 +20,8 @@ class ProductModel(db.Model):
         self.price = price
     
     @classmethod
-    def find_by_id(cls, id):
-        return cls.query.filter_by(id=id).first()
+    def find_by_id(cls, _id):
+        return cls.query.filter_by(id=_id).first()
 
     @classmethod
     def find_by_name(cls, name, *order_by, **pagination):
