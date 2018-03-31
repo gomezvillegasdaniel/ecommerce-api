@@ -27,7 +27,7 @@ class ProductLike(Resource):
 class ProductList(Resource):
 
     parser = reqparse.RequestParser()
-    parser.add_argument('orderBy', type=str)
+    parser.add_argument('orderBy', type=str, action='append')
     parser.add_argument('searchByName', type=str)
     parser.add_argument('page', type=int, required=True,
                         help="page field cannot be left blank!")
@@ -43,17 +43,12 @@ class ProductList(Resource):
         order_by = []
 
         if sorting:
-            if isinstance(sorting, list):
-                for field in sorting:
-                    if field == 'likes':
-                        field = desc(field)
-                    order_by.append(field)
-            else:
-                if sorting == 'likes':
-                    sorting = desc(sorting)
-                order_by.append(sorting)
+            for field in sorting:
+                if field == 'likes':
+                    field = desc(field)
+                order_by.append(field)
         else:
-            order_by.append('name')
+            order_by.append('name')  # default order only by name
 
         pagination = {'page': page, 'per_page': per_page}
 
