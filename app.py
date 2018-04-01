@@ -5,7 +5,8 @@ from flask_restful import Api
 from flask_jwt import JWT
 
 from security import authenticate, identity
-from resources.product_resource import Product, ProductList, ProductLike, ProductBuy
+from resources.product_resource import (Product, ProductList,
+                                        ProductLike, ProductBuy)
 from resources.user_resource import UserRegister
 
 app = Flask(__name__)
@@ -32,4 +33,5 @@ api.add_resource(UserRegister, '/api/user/register')
 if __name__ == '__main__':
     from db import db
     db.init_app(app)
-    app.run(port=5000, debug=False if os.environ.get('ENV') == 'PROD' else True)
+    app.run(port=5000,
+            debug=False if os.environ.get('ENV') == 'PROD' else True)
