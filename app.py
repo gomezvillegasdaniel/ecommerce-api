@@ -2,13 +2,16 @@ import os
 
 from flask import Flask
 from flask_restful import Api
+from flask_jwt import JWT
 
+from security import authenticate, identity
 from resources.product_resource import Product, ProductList, ProductLike, ProductBuy
 from resources.user_resource import UserRegister
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_AUTH_URL_RULE'] = '/api/login'
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 api = Api(app)
 
@@ -17,6 +20,8 @@ api = Api(app)
 def create_tables():
     db.create_all()
 
+
+jwt = JWT(app, authenticate, identity)
 
 api.add_resource(Product, '/api/product', '/api/product/<int:_id>')
 api.add_resource(ProductList, '/api/products')
