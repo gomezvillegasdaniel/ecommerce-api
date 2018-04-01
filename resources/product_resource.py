@@ -1,6 +1,8 @@
 from flask_restful import Resource, reqparse, inputs
+from flask_jwt import jwt_required
 
 from services.product_service import ProductService
+from services.user_service import is_admin
 
 
 class ProductBuy(Resource):
@@ -8,6 +10,7 @@ class ProductBuy(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('quantity', type=inputs.positive, required=True)
 
+    @jwt_required()
     def patch(self, _id):
         kwargs = ProductBuy.parser.parse_args()
         data = ProductService.buy_product(_id, kwargs.get('quantity'))
@@ -24,6 +27,7 @@ class ProductBuy(Resource):
 
 class ProductLike(Resource):
 
+    @jwt_required()
     def patch(self, _id):
 
         data = ProductService.give_like_product(_id)
@@ -60,6 +64,8 @@ class ProductList(Resource):
 
 class Product(Resource):
 
+    @jwt_required()
+    @is_admin()
     def delete(self, _id):
         data = ProductService.delete_product(_id)
 
@@ -68,6 +74,8 @@ class Product(Resource):
 
         return data, 200
 
+    @jwt_required()
+    @is_admin()
     def patch(self, _id):
 
         parser = reqparse.RequestParser()
@@ -93,6 +101,8 @@ class Product(Resource):
 
         return data, 200
 
+    @jwt_required()
+    @is_admin()
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('name', type=str, required=True,
