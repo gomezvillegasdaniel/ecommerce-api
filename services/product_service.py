@@ -69,7 +69,18 @@ class ProductService:
         except:
             return {'error': 'An error occurred buying a product.'}
 
-        return {'successful_buy': {'current_stock': product.stock}}
+        return {
+            'successful_purchase': {
+                'product': {
+                    'id': product.id,
+                    'name': product.name,
+                    'npc': product.npc,
+                    'current_stock': product.stock,
+                    'price': product.price
+                },
+                'purchase_quantity': quantity
+            }
+        }
 
     @staticmethod
     def give_like_product(_id):
