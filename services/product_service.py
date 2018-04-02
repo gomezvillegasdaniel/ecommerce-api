@@ -1,5 +1,7 @@
 from models.product_model import ProductModel
 
+from services.log_service import log_purchase
+
 from sqlalchemy import desc
 
 from math import ceil
@@ -50,6 +52,7 @@ class ProductService:
         }
 
     @staticmethod
+    @log_purchase()
     def buy_product(_id, quantity):
         product = ProductModel.find_by_id(_id)
 
