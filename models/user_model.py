@@ -7,6 +7,7 @@ class UserModel(db.Model):
     username = db.Column(db.String(80))
     password = db.Column(db.String(80))
     role = db.Column(db.String(50))
+    logs = db.relationship('PurchaseLogModel', lazy='dynamic')
 
     def __init__(self, username, password, role):
         self.username = username

@@ -12,6 +12,7 @@ class ProductModel(db.Model):
     price = db.Column(db.Float(precision=2))
     likes = db.Column(db.Integer, default=0)
     last_update = db.Column(db.DateTime)
+    logs = db.relationship('PurchaseLogModel', lazy='dynamic')
 
     def __init__(self, name, npc, stock, price):
         self.name = name
