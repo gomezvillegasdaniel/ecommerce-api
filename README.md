@@ -6,14 +6,12 @@ sudo apt-get install python3 python3-pip python3-virtualenv
 sudo pip3 install virtualenvwrapper
 ```
 
-- Add these environment variables to ~/.bashrc substituting your own db config
+- Add these lines to ~/.bashrc
 ```
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_VIRTUALENV=$(which virtualenv)
 source /usr/local/bin/virtualenvwrapper.sh
-export DATABASE_URL="postgres://username:password@host:port/dbname"
-export FLASK_SECRET_KEY="secretkey"
 ```
 - Apply them
 ```
@@ -31,6 +29,12 @@ sudo -i -u postgres
 psql -c "CREATE ROLE username LOGIN ENCRYPTED PASSWORD 'password' CREATEDB VALID UNTIL 'infinity';"
 sudo /etc/init.d/postgresql restart
 createdb dbname
+```
+
+- Add these lines to ~/.bashrc substituting your own config
+```
+export DATABASE_URL="postgres://username:password@host:port/dbname"
+export FLASK_SECRET_KEY="secretkey"
 ```
 
 - Add this line to ~/.bashrc for production purposes only
