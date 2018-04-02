@@ -33,5 +33,5 @@ api.add_resource(UserRegister, '/api/user/register')
 if __name__ == '__main__':
     from db import db
     db.init_app(app)
-    app.run(port=5000,
+    app.run(host='0.0.0.0', port=5000,
             debug=False if os.environ.get('ENV') == 'PROD' else True)
