@@ -2,7 +2,7 @@
 
 - Install these packages
 ```
-sudo apt-get install python3 python3-pip python3-virtualenv
+sudo apt-get install python3 python3-pip python3-pkg-resources python3-virtualenv
 sudo pip3 install virtualenvwrapper
 ```
 
