@@ -37,16 +37,17 @@ export DATABASE_URL="postgres://username:password@host:port/dbname"
 export FLASK_SECRET_KEY="secretkey"
 ```
 
-- Add this line to ~/.bashrc for production purposes only
-```
-export ENV="PROD"
-```
 - Apply
 ```
 source ~/.bashrc
 ```
 
-- Run
+- Prod run
 ```
-python app.py
+python app.py run
+```
+
+- Dev run
+```
+python app.py dev
 ```
