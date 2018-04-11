@@ -37,6 +37,7 @@ class RunServerCommand(Command):
 
 class RunDevServerCommand(Command):
     def run(self):
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DEV_DATABASE_URL')
         app.run(host='0.0.0.0', port=5000, debug=True)
 
 
