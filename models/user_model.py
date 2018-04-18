@@ -14,10 +14,6 @@ class UserModel(db.Model):
         self.password = password
         self.role = role
 
-    def save_to_db(self):
-        db.session.add(self)
-        db.session.commit()
-
     @classmethod
     def find_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
@@ -29,3 +25,12 @@ class UserModel(db.Model):
     @classmethod
     def find_by_role(cls, role):
         return cls.query.filter_by(role=role).all()
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
+    
