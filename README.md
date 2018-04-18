@@ -30,12 +30,14 @@ psql -c "CREATE ROLE username LOGIN ENCRYPTED PASSWORD 'password' CREATEDB VALID
 sudo /etc/init.d/postgresql restart
 createdb dbname
 createdb dev_dbname
+createdb test_dbname
 ```
 
 - Add these lines to ~/.bashrc substituting your own config
 ```
-export DATABASE_URL="postgres://username:password@host:port/dbname"
-export DEV_DATABASE_URL="postgres://username:password@host:port/dev_dbname"
+export DATABASE_URL="postgresql://username:password@host:port/dbname"
+export DEV_DATABASE_URL="postgresql://username:password@host:port/dev_dbname"
+export TEST_DATABASE_URL="postgresql://username:password@host:port/test_dbname"
 export FLASK_SECRET_KEY="secretkey"
 ```
 
