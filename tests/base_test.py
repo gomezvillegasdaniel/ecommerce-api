@@ -12,14 +12,12 @@ class BaseTest(TestCase):
         app.config['DEBUG'] = False
         with app.app_context():
             db.init_app(app)
-
-    def setUp(self):
-        with app.app_context():
             db.create_all()
-        self.app = app.test_client
-        self.app_context = app.app_context
+        cls.api_client = app.test_client
+        cls.app_context = app.app_context
 
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(cls):
         with app.app_context():
             db.session.remove()
             db.drop_all()
