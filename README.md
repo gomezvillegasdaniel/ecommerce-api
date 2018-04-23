@@ -55,3 +55,8 @@ python app.py run
 ```
 python app.py dev
 ```
+
+- Tests run
+```
+python -m unittest -v
+```
