@@ -46,11 +46,6 @@ export FLASK_SECRET_KEY="secretkey"
 source ~/.bashrc
 ```
 
-- Prod run
-```
-python app.py run
-```
-
 - Dev run
 ```
 python app.py dev

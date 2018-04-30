@@ -30,11 +30,6 @@ def create_tables():
     db.create_all()
 
 
-class RunServerCommand(Command):
-    def run(self):
-        app.run(host='0.0.0.0', port=5000, debug=False)
-
-
 class RunDevServerCommand(Command):
     def run(self):
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DEV_DATABASE_URL')
@@ -42,7 +37,6 @@ class RunDevServerCommand(Command):
 
 
 manager = Manager(app)
-manager.add_command('run', RunServerCommand)
 manager.add_command('dev', RunDevServerCommand)
 manager.add_command('db', MigrateCommand)
 
