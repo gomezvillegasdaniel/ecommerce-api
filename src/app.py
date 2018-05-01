@@ -32,8 +32,7 @@ def create_tables():
 
 class RunDevServerCommand(Command):
     def run(self):
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DEV_DATABASE_URL')
-        app.run(host='0.0.0.0', port=5000, debug=True)
+        app.run(host='0.0.0.0', port=8000, debug=True)
 
 
 manager = Manager(app)
