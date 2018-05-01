@@ -1,0 +1,11 @@
+language: generic
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.4.2
+
+before_install:
+  - docker volume create --name=db_data
+  - docker-compose build test
+
+script:
+  - docker-compose up test
