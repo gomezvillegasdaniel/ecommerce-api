@@ -8,7 +8,7 @@ class BaseTest(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('TEST_DATABASE_URL')
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tests.db'
         app.config['DEBUG'] = False
         with app.app_context():
             db.init_app(app)
