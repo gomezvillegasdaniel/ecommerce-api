@@ -1,3 +1,6 @@
+# Because each new docker container is actually a new instance of an isolated environment,
+# it is not needed to install a virtualenv in the image nor use it within a container.
+
 FROM python:3.6-slim
 
 ENV PYTHONUNBUFFERED=1
