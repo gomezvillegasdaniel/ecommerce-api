@@ -9,7 +9,7 @@ docker volume create --name=db_data
 
 - Build the docker image and service
 ```
-docker-compose -f docker-compose.yml build web
+docker-compose build web
 ```
 
 - Start the container
@@ -17,7 +17,7 @@ docker-compose -f docker-compose.yml build web
 docker-compose up web
 
 You can run it as a daemon service with:
-docker-compose -f docker-compose.yml up -d web
+docker-compose up -d web
 ```
 
 - To get into bash in an existing container already started (optional):
@@ -27,7 +27,7 @@ docker exec -i -t container_id /bin/bash
 
 - To stop the container
 ```
-docker-compose -f docker-compose.yml down web
+docker-compose down web
 ```
 
 - To run tests
